@@ -1,1 +1,3 @@
-console.log("start project by webpack");
+import blog from './main.js';
+
+const myblog = new blog();
