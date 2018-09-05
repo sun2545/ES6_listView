@@ -1,10 +1,34 @@
 class Blog {
-    constructor(){
-       const dataUGL=" https://github.com/nigayo/inflearn-es6/tree/step4";
-        this.setInitData(dataURL);
+    constructor(){   
+        this.setInitData();    
+       this.registerEvents(); 
+     //  this.setInitData(dataURL);
+     this.likedSet = new Set();
     }
+
+    setInitVariables(){
+        this.blogList = document.querySelector(".start");
+    }
+
+    registerEvents() {
+        const startBtn = document.querySelector(".start");
+        const dataUGL=" https://github.com/nigayo/inflearn-es6/tree/step4";
+     
+        startBtn.addEventListener("click", ()=>{
+            this.setInitData(dataURL);
+        });
+        blogList.addEventListener("click", (evt) => {
+            const targetClassName = evt.target.className;
+            if(targetClassName !="like") return;
+            const postTitle =target.previousElementSibling.textContent;
+            this.likedSet.add(postTitle);
+
+         
+        });
+    }
+
     setInitData(dataURL){
-        this.getData(dataURL, this.insertPost);
+        this.getData(dataURL, this.insertPost.bind(this));
     }
 
     getData(dataURL, fn){
@@ -20,9 +44,13 @@ class Blog {
     }
 
     insertPost(list){
-        const ul = document.querySelector(".blogList > ul");
-        list.forEach((v) =>{
-            ul.innerHTML += `<li><a href = ${v.link}> ${v.title} </a></li>`;
+         list.forEach((v) =>{
+         this.blogList.innerHTML += `
+            <li>
+            <a href = ${v.link}> ${v.title} </a>
+            <div class="like"> wish list </div>
+            </li>
+            `;
         })
     }
 }
