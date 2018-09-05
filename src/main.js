@@ -19,12 +19,38 @@ class Blog {
         });
         blogList.addEventListener("click", (evt) => {
             const targetClassName = evt.target.className;
-            if(targetClassName !="like") return;
+            if(targetClassName !="like" && targetClassName !="unlike") return;
             const postTitle =target.previousElementSibling.textContent;
+            //if click unlike, have to change like and rendering
+            if(targetClassName=="unlike"){
+             target.className ="like";
+             target.innerText =" wish list";
+             this.likedSet.delete(postTitle);
+            }else {
+                 
+             //like -> unlike
+            target.className ="unlike";
+            target.innerText ="cancle wish";
+            //add wish list
             this.likedSet.add(postTitle);
 
-         
+            }      
+            
+           
+            // add my wishlist
+            this.updateLikedList();         
         });
+    }
+
+    updateLikedList(){
+        const ul = document.querySelector(".like-list>ul");
+        let likedSum = "";
+        //put wishlist to li tag usign innerHTML
+        this.likedSet.forEach((v)=>{
+            likedSum +=`<li> ${v} </li>`;
+
+        });
+        ul.innerHTML= likedSum;
     }
 
     setInitData(dataURL){
